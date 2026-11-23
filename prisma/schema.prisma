@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Chamado {
+  id            String   @id @default(cuid())
+  numero        Int      @unique
+  tipo          String   @default("Outro")
+  local         String   @default("Sala 05")
+  descricao     String
+  prioridade    String   @default("Média")
+  status        String   @default("Aberto")
+  solicitante   String
+  evidenciaNome String?
+  evidenciaTipo String?
+  evidenciaDados String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Equipamento {
+  id           String   @id @default(cuid())
+  patrimonio   String   @unique
+  modelo       String
+  status       String   @default("Disponível")
+  reservadoPor String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Avaliacao {
+  id         String   @id @default(cuid())
+  nota       Int
+  comentario String   @default("")
+  unidade    String   @default("Taguatinga")
+  nome       String   @default("")
+  createdAt  DateTime @default(now())
+}
